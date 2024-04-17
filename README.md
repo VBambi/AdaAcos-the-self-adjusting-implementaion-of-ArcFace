@@ -5,7 +5,7 @@ However, eliminating the margin parameter completely seems to have made it fall 
 This led me to experiments with adaptively scaling the margin parameter instead of the scale parameter s.
 ## The math
 AdaAcos uses the angular distance of the closest uncorresponding class (theta_false_min) and the distance to ground truth (theta_y)
-to compute a angular margin parameter just big enough for the classification to barely fail.
+to compute an angular margin parameter just big enough for the classification to barely fail/succeed.
 Regarding batchwise computation, the mean of the samples is used, which means that exactly half of the samples in a batch will be classified correctly.<br>
 This is only applicable, when the network has already reached a classification accuracy of 50%, m must not "award" the nework to reach 50% accuracy -> cap m to be bigger than or equal zero<br><br>
 The formular for the batchwise m is as follows: $\ m = max(median(min(θ_{i,j≠𝑦}) − θ_{i,j=y}), 0)\$<br>
