@@ -31,7 +31,7 @@ class AdaAcos(nn.Module):
             with torch.no_grad():
                 theta = torch.acos(torch.clamp(logits, -1.0+1e-7, 1.0-1e-7))
                 theta_false_min = torch.min(theta[y!=1].view(theta.shape[0],-1),axis=1)[0]  # angle of closest uncorresponding class
-                m = torch.median(torch.clamp(theta_false_min-theta[y==1], min=0))           # compute m = difference of theta_y and theta_false_min
+                m = torch.clamp(torch.median(theta_false_min-theta[y==1]), min=0)           # compute m = difference of theta_y and theta_false_min
                 self.m = m.item() # to easily view or log m during training
                 
                 logits[y==1] = torch.cos(torch.clamp(theta[y==1]+m, max=np.pi))             # penalize theta_y with m
